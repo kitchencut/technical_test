@@ -1,7 +1,5 @@
 <?php
 
-/** @var \Laravel\Lumen\Routing\Router $router */
-
 /*
 |--------------------------------------------------------------------------
 | Application Routes
@@ -13,6 +11,20 @@
 |
 */
 
+/** @var \Laravel\Lumen\Routing\Router $router */
+
 $router->get('/', function () use ($router) {
     return $router->app->version();
+});
+
+$router->group(['prefix' => 'invoices'], function () use ($router) {
+    $router->get('/', [
+        'as' => 'healthcheck',
+        fn(): string => "Invoices API {$router->app->version()}."
+    ]);
+
+    $router->get('details/', [
+        'as'   => 'shmeeetails',
+        'uses' => 'InvoicesController@somethingWillBeThere'
+    ]);
 });

@@ -18,9 +18,9 @@ WORKDIR /var/www
 COPY --from=composer:latest /usr/bin/composer /usr/local/bin/composer
 COPY ./api/composer.json ./api/composer.lock ./
 
-RUN composer dump-autoload \
-    && composer install --dev --no-interaction -o
+RUN composer install --dev --no-interaction -o \
+    && composer dump-autoload -o
 
 EXPOSE 9000
 
-RUN echo "The API Service is Ready!"
+RUN echo "\n\nThe API Service is Ready!\n\n"

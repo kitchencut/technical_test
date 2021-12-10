@@ -8,8 +8,6 @@ services:
       dockerfile: api.dockerfile
     volumes:
       - ./api:/var/www
-    links:
-      - mysql-db
     depends_on:
       - mysql-db
     networks:
@@ -25,6 +23,7 @@ services:
       - MYSQL_USER=dev_user
       - MYSQL_PASSWORD=dev_pass
     volumes:
+      - ./dump/base.sql:/docker-entrypoint-initdb.d
       - data-local-storage:/var/lib/mysql
     ports:
       - "3399:3306"

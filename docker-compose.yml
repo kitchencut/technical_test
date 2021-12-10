@@ -21,7 +21,7 @@ services:
     restart: always
     environment:
       - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
-      - MYSQL_DATABASE=api_db
+      - MYSQL_DATABASE=interview_tests
       - MYSQL_USER=dev_user
       - MYSQL_PASSWORD=dev_pass
     volumes:

@@ -14,6 +14,19 @@ class AcceptanceTests extends TestCase
      * @test
      * @group AcceptanceTests
      *
+     * Application is reachable.
+     */
+    public function application_is_running()
+    {
+        $requestResponse = $this->get(route('healthcheck'));
+
+        $requestResponse->assertStatus(Response::HTTP_OK);
+    }
+
+    /**
+     * @test
+     * @group AcceptanceTests
+     *
      * Create an Application that connects to MySQL.
      */
     public function application_can_connect_to_database()
@@ -30,7 +43,19 @@ class AcceptanceTests extends TestCase
      */
     public function api_endpoint_receives_range_date_status_and_location_and_return_invoice_header_data_total_value()
     {
+        $requestPayload  = [
+            'date_start' => '2021-07-01',
+            'date_end'   => '2021-07-31',
+            'status'     => 'draft',
+            'location'   => 'LOCATION 001',
+        ];
 
+        $requestResponse = $this->getJson(
+            route('invoices.store'),
+            $requestPayload
+        );
+
+        $requestResponse->assertStatus(Response::HTTP_OK);
     }
 
     /**

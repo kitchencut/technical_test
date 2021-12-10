@@ -18,12 +18,12 @@ services:
     image: mysql/mysql-server:5.7
     restart: always
     environment:
-      - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
+      - MYSQL_ROOT_PASSWORD=r00tPassword
       - MYSQL_DATABASE=interview_tests
       - MYSQL_USER=dev_user
       - MYSQL_PASSWORD=dev_pass
     volumes:
-      - ./dump/base.sql:/docker-entrypoint-initdb.d
+      - ./dump:/docker-entrypoint-initdb.d
       - data-local-storage:/var/lib/mysql
     ports:
       - "3399:3306"

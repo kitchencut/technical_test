@@ -1,0 +1,41 @@
+version: '2.3'
+
+services:
+  api:
+    restart: on-failure
+    build:
+      context: .
+      dockerfile: api.dockerfile
+    volumes:
+      - ./api:/var/www
+    links:
+      - mysql-db
+    depends_on:
+      - mysql-db
+    networks:
+      - backend
+      - frontend
+
+  mysql-db:
+    image: mysql/mysql-server:5.7
+    restart: always
+    environment:
+      - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
+      - MYSQL_DATABASE=api_db
+      - MYSQL_USER=dev_user
+      - MYSQL_PASSWORD=dev_pass
+    volumes:
+      - data-local-storage:/var/lib/mysql
+    ports:
+      - "3399:3306"
+    networks:
+      - backend
+
+networks:
+  frontend:
+    driver: bridge
+  backend:
+    driver: bridge
+
+volumes:
+  data-local-storage: {}
